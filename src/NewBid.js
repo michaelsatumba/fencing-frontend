@@ -20,25 +20,25 @@ function NewBid() {
     });
   };
 
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     try {
-//       const response = await fetch('http://flaskexample-env.eba-aemar3mp.us-west-1.elasticbeanstalk.com/new_bid/job_details', {
-//         method: 'POST',
-//         body: new URLSearchParams(formData)
-//       });
-//       const result = await response.json();
-//       console.log(result);
-//       navigate('/new-bid');
-//     } catch (error) {
-//       console.error('Error:', error);
-//     }
-//   };
-
-const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    navigate('/results'); 
+    try {
+      const response = await fetch('http://flaskexample-env.eba-aemar3mp.us-west-1.elasticbeanstalk.com/new_bid/job_details', {
+        method: 'POST',
+        body: new URLSearchParams(formData)
+      });
+      const result = await response.json();
+      console.log(result);
+      navigate('/new-bid');
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
+
+// const handleSubmit = (e) => {
+//     e.preventDefault();
+//     navigate('/results'); 
+//   };
 
   return (
     <div className="bg-black text-white flex items-center justify-center min-h-screen">
