@@ -23,7 +23,7 @@ function NewBid() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://flaskexample-env.eba-aemar3mp.us-west-1.elasticbeanstalk.com/new_bid/job_details', {
+      const response = await fetch('https://d183qnk2al6bfi.cloudfront.net/new_bid/job_details', {
         method: 'POST',
         body: new URLSearchParams(formData)
       });
