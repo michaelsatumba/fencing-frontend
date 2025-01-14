@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 
 function NewBid() {
+  const location = useLocation();
+  const { job_id } = location.state || {}; // Retrieve the job_id from the location state
+
   const [formData, setFormData] = useState({
-    client_name: '',
-    contact_info: '',
-    job_address: '',
-    job_scope: ''
+    job_id: job_id,
+    fence_type: '',
+    linear_feet: '',
+    corner_posts: '',
+    end_posts: '',
+    height: '',
+    option_d: ''
   });
 
   const navigate = useNavigate();
@@ -23,13 +29,13 @@ function NewBid() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('https://d183qnk2al6bfi.cloudfront.net/new_bid/job_details', {
+      const response = await fetch('https://d183qnk2al6bfi.cloudfront.net/new_bid/fence_details', {
         method: 'POST',
         body: new URLSearchParams(formData)
       });
       const result = await response.json();
       console.log(result);
-      navigate('/new-bid');
+      navigate('/results', { state: { result } });
     } catch (error) {
       console.error('Error:', error);
     }
@@ -62,16 +68,16 @@ function NewBid() {
         />
         <input
           type="text"
-          name="corner_post"
-          value={formData.corner_post}
+          name="corner_posts"
+          value={formData.corner_posts}
           onChange={handleChange}
           placeholder="Corner Post"
           className="bg-gray-800 text-white px-4 py-2 rounded"
         />
         <input
           type="text"
-          name="end_post"
-          value={formData.end_post}
+          name="end_posts"
+          value={formData.end_posts}
           onChange={handleChange}
           placeholder="End Post"
           className="bg-gray-800 text-white px-4 py-2 rounded"
