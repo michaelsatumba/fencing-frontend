@@ -22,7 +22,7 @@ function Information() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('https://d183qnk2al6bfi.cloudfront.net/new_bid/job_details/new_bid/job_details', {
+      const response = await fetch('https://d183qnk2al6bfi.cloudfront.net/new_bid/job_details', {
         method: 'POST',
         body: new URLSearchParams(formData)
       });
