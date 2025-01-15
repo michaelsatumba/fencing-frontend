@@ -29,7 +29,7 @@ function Information() {
       const result = await response.json();
       console.log(result);
       console.log('job_id:', result.job_id);
-      navigate('/new-bid', { state: { job_id: result.job_id } }); // Pass the job_id using navigate
+      navigate('/new-bid', { state: { job_id: result.job_id, ...formData } }); // Pass the job_id using navigate
     } catch (error) {
       console.error('Error:', error);
     }
