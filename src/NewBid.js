@@ -60,7 +60,7 @@ function NewBid() {
           className="bg-gray-800 text-white px-4 py-2 rounded"
         />
         <input
-          type="text"
+          type="number"
           name="linear_feet"
           value={formData.linear_feet}
           onChange={handleChange}
@@ -68,7 +68,7 @@ function NewBid() {
           className="bg-gray-800 text-white px-4 py-2 rounded"
         />
         <input
-          type="text"
+          type="number"
           name="corner_posts"
           value={formData.corner_posts}
           onChange={handleChange}
@@ -76,7 +76,7 @@ function NewBid() {
           className="bg-gray-800 text-white px-4 py-2 rounded"
         />
         <input
-          type="text"
+          type="number"
           name="end_posts"
           value={formData.end_posts}
           onChange={handleChange}
@@ -84,7 +84,7 @@ function NewBid() {
           className="bg-gray-800 text-white px-4 py-2 rounded"
         />
         <input
-          type="text"
+          type="number"
           name="height"
           value={formData.height}
           onChange={handleChange}
