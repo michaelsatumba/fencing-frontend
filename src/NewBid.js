@@ -51,14 +51,18 @@ function NewBid() {
     <div className="bg-black text-white flex items-center justify-center min-h-screen">
       <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
         <h1 className="text-3xl font-bold">New Bid Page</h1>
-        <input
-          type="text"
+        <select
           name="fence_type"
           value={formData.fence_type}
           onChange={handleChange}
-          placeholder="Fence Type"
           className="bg-gray-800 text-white px-4 py-2 rounded"
-        />
+        >
+          <option value="">Select Fence Type</option>
+          <option value="chain link">Chain Link</option>
+          <option value="wood">Wood</option>
+          <option value="vinyl">Vinyl</option>
+          <option value="sp wrought iron">SP Wrought Iron</option>
+        </select>
         <input
           type="number"
           name="linear_feet"
