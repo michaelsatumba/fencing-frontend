@@ -29,13 +29,12 @@ function NewBid() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log('Posting data:', formData);
       const response = await fetch('https://d183qnk2al6bfi.cloudfront.net/new_bid/fence_details', {
         method: 'POST',
         body: new URLSearchParams(formData)
       });
       const result = await response.json();
-      console.log(result);
+      console.log("result", result);
       navigate('/results', { state: { result, client_name, contact_info, job_address, job_scope } });
     } catch (error) {
       console.error('Error:', error);
