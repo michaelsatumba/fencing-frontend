@@ -18,13 +18,17 @@ function Results() {
     e.preventDefault();
     try {
       const job_id = result.job_id;
+      const requestBody = { job_id, notes };
+      console.log("Posting data:", requestBody); // Log the data being posted
+  
       const response = await fetch('https://d183qnk2al6bfi.cloudfront.net/new_bid/add_notes', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: JSON.stringify({ job_id, notes })
+        body: new URLSearchParams(requestBody)
       });
+  
       const newResult = await response.json();
       console.log("new result", newResult);
       alert('Notes submitted successfully');
