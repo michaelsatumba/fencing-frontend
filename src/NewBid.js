@@ -101,7 +101,7 @@ function NewBid() {
         onChange={handleChange}
         className="bg-gray-800 text-white px-4 py-2 rounded"
       >
-        <option value="">Select an option</option>
+        <option value="">Top Rail?</option>
         <option value="Yes">Yes</option>
         <option value="No">No</option>
         </select>

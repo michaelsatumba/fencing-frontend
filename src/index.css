@@ -2,3 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    input:-webkit-autofill {
+      box-shadow: 0 0 0px 1000px #1F2937 inset ; /* Match the background color */
+      -webkit-text-fill-color: white; /* Match the text color */
+    }
+  }
+  
+  
