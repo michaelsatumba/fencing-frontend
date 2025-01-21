@@ -28,6 +28,7 @@ function NewBid() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Submitting form data:", formData);
     try {
       const response = await fetch('https://d183qnk2al6bfi.cloudfront.net/new_bid/fence_details', {
         method: 'POST',
@@ -90,14 +91,16 @@ function NewBid() {
           placeholder="Height"
           className="bg-gray-800 text-white px-4 py-2 rounded"
         />
-        <input
-          type="text"
-          name="option_d"
-          value={formData.option_d}
-          onChange={handleChange}
-          placeholder="Yes or No"
-          className="bg-gray-800 text-white px-4 py-2 rounded"
-        />
+        <select
+        name="option_d"
+        value={formData.option_d}
+        onChange={handleChange}
+        className="bg-gray-800 text-white px-4 py-2 rounded"
+      >
+        <option value="">Select an option</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+        </select>
         <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
           Submit
         </button>
