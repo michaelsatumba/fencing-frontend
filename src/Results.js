@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import jsPDF from 'jspdf';
+import { Document, Packer, Paragraph, TextRun } from 'docx';
+import { saveAs } from 'file-saver';
 
 function Results() {
   const location = useLocation();
@@ -38,6 +40,75 @@ function Results() {
     }
   };
 
+  const handleSaveAsWord = () => {
+    const doc = new Document({
+      sections: [
+        {
+          properties: {},
+          children: [
+            new Paragraph({
+              children: [
+                new TextRun("Client Information:"),
+              ],
+            }),
+            new Paragraph({
+              children: [
+                new TextRun("Client Name: " + client_name),
+              ],
+            }),
+            new Paragraph({
+              children: [
+                new TextRun("Contact Info: " + contact_info),
+              ],
+            }),
+            new Paragraph({
+              children: [
+                new TextRun("Job Address: " + job_address),
+              ],
+            }),
+            new Paragraph({
+              children: [
+                new TextRun("Job Scope: " + job_scope),
+              ],
+            }),
+            new Paragraph({ // Empty paragraph for line break
+              children: [],
+            }),
+            new Paragraph({
+              children: [
+                new TextRun("Materials Needed:"),
+              ],
+            }),
+            ...Object.entries(result.materials_needed).map(([key, value]) => 
+              new Paragraph({
+                children: [
+                  new TextRun(`${formatLabel(key)}: ${value}`),
+                ],
+              })
+            ),
+            new Paragraph({ // Empty paragraph for line break
+              children: [],
+            }),
+            new Paragraph({
+              children: [
+                new TextRun("Additional Notes:"),
+              ],
+            }),
+            new Paragraph({
+              children: [
+                new TextRun(notes),
+              ],
+            }),
+          ],
+        },
+      ],
+    });
+  
+    Packer.toBlob(doc).then((blob) => {
+      saveAs(blob, "result.docx");
+    });
+  };
+
   const handleSaveAsPDF = () => {
     const doc = new jsPDF();
     
@@ -47,16 +118,21 @@ function Results() {
     doc.text(`Contact Info: ${contact_info}`, 10, 30);
     doc.text(`Job Address: ${job_address}`, 10, 40);
     doc.text(`Job Scope: ${job_scope}`, 10, 50);
+  
+    // Add a space before Materials Needed
+    const materialsStartY = 70; // Adjusted y-coordinate for Materials Needed
     
     // Add Materials Needed
-    doc.text('Materials Needed:', 10, 60);
+    doc.text('Materials Needed:', 10, materialsStartY);
     Object.entries(result.materials_needed).forEach(([key, value], index) => {
-      doc.text(`${formatLabel(key)}: ${value}`, 10, 70 + (index * 10));
+      doc.text(`${formatLabel(key)}: ${value}`, 10, materialsStartY + 10 + (index * 10));
     });
     
     // Add Additional Notes
-    doc.text('Additional Notes:', 10, 80 + (Object.entries(result.materials_needed).length * 10));
-    doc.text(notes, 10, 90 + (Object.entries(result.materials_needed).length * 10));
+    const materialsLength = Object.entries(result.materials_needed).length;
+    const additionalNotesStartY = materialsStartY + 20 + (materialsLength * 10); // Adjusted y-coordinate for Additional Notes
+    doc.text('Additional Notes:', 10, additionalNotesStartY);
+    doc.text(notes, 10, additionalNotesStartY + 10);
     
     doc.save('results.pdf');
   };
@@ -108,7 +184,8 @@ function Results() {
       <button onClick={handleNotesSubmit} className="bg-blue-500 text-white px-4 py-2 rounded">
           Submit Notes
         </button>
-      <button onClick={handleSaveAsPDF} className="bg-blue-500 text-white px-4 py-2 rounded">Save as PDF</button>
+      <button onClick={handleSaveAsWord} className="bg-blue-500 text-white px-4 py-2 rounded">Save Job Spec as Word Doc</button>
+      <button onClick={handleSaveAsPDF} className="bg-blue-500 text-white px-4 py-2 rounded">Save Job Spec as PDF</button>
       <button onClick={handleSubmit} className="bg-blue-500 text-white px-4 py-2 rounded">Back to Home</button>
       </div>
 
