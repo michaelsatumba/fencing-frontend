@@ -144,7 +144,7 @@ function Results() {
   };
 
   return (
-    <div className="bg-black text-white flex flex-col items-center justify-center min-h-screen">
+    <div className="bg-white text-black flex flex-col items-center justify-center min-h-screen">
       
       <div className="flex flex-col space-y-4 mb-4">
       <h1 className="text-3xl font-bold">Results Page</h1>
@@ -174,19 +174,19 @@ function Results() {
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
           placeholder="Add notes here..."
-          className="bg-gray-800 text-white px-4 py-2 rounded mb-2"
+          className="bg-gray-800 text-black px-4 py-2 rounded mb-2"
         />
       </div>
 
       </div>
 
       <div className="flex flex-col space-y-4 mb-4">
-      <button onClick={handleNotesSubmit} className="bg-blue-500 text-white px-4 py-2 rounded">
+      <button onClick={handleNotesSubmit} className="bg-blue-500 text-black px-4 py-2 rounded">
           Submit Notes
         </button>
-      <button onClick={handleSaveAsWord} className="bg-blue-500 text-white px-4 py-2 rounded">Save Job Spec as Word Doc</button>
-      <button onClick={handleSaveAsPDF} className="bg-blue-500 text-white px-4 py-2 rounded">Save Job Spec as PDF</button>
-      <button onClick={handleSubmit} className="bg-blue-500 text-white px-4 py-2 rounded">Back to Home</button>
+      <button onClick={handleSaveAsWord} className="bg-blue-500 text-black px-4 py-2 rounded">Save Job Spec as Word Doc</button>
+      <button onClick={handleSaveAsPDF} className="bg-blue-500 text-black px-4 py-2 rounded">Save Job Spec as PDF</button>
+      <button onClick={handleSubmit} className="bg-blue-500 text-black px-4 py-2 rounded">Back to Home</button>
       </div>
 
     </div>

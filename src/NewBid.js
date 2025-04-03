@@ -26,29 +26,29 @@ function NewBid() {
     });
   };
 
-  const handleSubmit = async (e) => {
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   console.log("Submitting form data:", formData);
+  //   try {
+  //     const response = await fetch('https://d183qnk2al6bfi.cloudfront.net/new_bid/fence_details', {
+  //       method: 'POST',
+  //       body: new URLSearchParams(formData)
+  //     });
+  //     const result = await response.json();
+  //     console.log("result", result);
+  //     navigate('/results', { state: { result, client_name, contact_info, job_address, job_scope } });
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //   }
+  // };
+
+const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submitting form data:", formData);
-    try {
-      const response = await fetch('https://d183qnk2al6bfi.cloudfront.net/new_bid/fence_details', {
-        method: 'POST',
-        body: new URLSearchParams(formData)
-      });
-      const result = await response.json();
-      console.log("result", result);
-      navigate('/results', { state: { result, client_name, contact_info, job_address, job_scope } });
-    } catch (error) {
-      console.error('Error:', error);
-    }
+    navigate('/results'); 
   };
 
-// const handleSubmit = (e) => {
-//     e.preventDefault();
-//     navigate('/results'); 
-//   };
-
   return (
-    <div className="bg-black text-white flex items-center justify-center min-h-screen">
+    <div className="bg-white text-black flex items-center justify-center min-h-screen">
       <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
         <h1 className="text-3xl font-bold">New Bid Page</h1>
         <select
@@ -105,7 +105,7 @@ function NewBid() {
         <option value="Yes">Yes</option>
         <option value="No">No</option>
         </select>
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
+        <button type="submit" className="bg-blue-500 text-black px-4 py-2 rounded">
           Submit
         </button>
       </form>
