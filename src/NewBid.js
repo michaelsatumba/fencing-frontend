@@ -50,6 +50,7 @@ const handleSubmit = (e) => {
   return (
     <div className="bg-white text-black flex items-center justify-center min-h-screen">
       <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+        <img src="/logo512x512.png" alt="Logo" className="mb-4" />
         <h1 className="text-3xl font-bold">New Bid Page</h1>
         <select
           name="fence_type"

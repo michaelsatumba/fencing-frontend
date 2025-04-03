@@ -145,7 +145,7 @@ function Results() {
 
   return (
     <div className="bg-white text-black flex flex-col items-center justify-center min-h-screen">
-      
+      <img src="/logo512x512.png" alt="Logo" className="mb-4" />
       <div className="flex flex-col space-y-4 mb-4">
       <h1 className="text-3xl font-bold">Results Page</h1>
         <div>
