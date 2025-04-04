@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-
 function NewBid() {
   const location = useLocation();
   const { job_id, client_name, contact_info, job_address, job_scope } = location.state || {}; // Retrieve the job_id from the location state
@@ -13,7 +12,13 @@ function NewBid() {
     corner_posts: '',
     end_posts: '',
     height: '',
-    option_d: ''
+    option_d: '',
+    price_per_square_foot: '', // New field
+    pricing_strategy: '', // New field
+    material_prices: '', // New field
+    daily_rate: '', // New field
+    num_days: '', // New field
+    num_employees: '' // New field
   });
 
   const navigate = useNavigate();
@@ -26,25 +31,62 @@ function NewBid() {
     });
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   console.log("Submitting form data:", formData);
-  //   try {
-  //     const response = await fetch('https://d183qnk2al6bfi.cloudfront.net/new_bid/fence_details', {
-  //       method: 'POST',
-  //       body: new URLSearchParams(formData)
-  //     });
-  //     const result = await response.json();
-  //     console.log("result", result);
-  //     navigate('/results', { state: { result, client_name, contact_info, job_address, job_scope } });
-  //   } catch (error) {
-  //     console.error('Error:', error);
-  //   }
-  // };
-
-const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    navigate('/results'); 
+    console.log("Submitting form data:", formData);
+
+    try {
+      // First POST request
+      const response1 = await fetch('https://afc-proposal.onrender.com/new_bid/fence_details', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          job_id: formData.job_id,
+          fence_type: formData.fence_type,
+          linear_feet: formData.linear_feet,
+          corner_posts: formData.corner_posts,
+          end_posts: formData.end_posts,
+          height: formData.height,
+          option_d: formData.option_d,
+        }),
+      });
+
+      const result1 = await response1.json();
+      console.log("First POST result:", result1);
+
+            // Second POST request
+            const secondPostPayload = {
+              job_id: formData.job_id,
+              price_per_square_foot: parseFloat(formData.price_per_square_foot),
+              pricing_strategy: formData.pricing_strategy,
+              material_prices: formData.material_prices ? JSON.parse(formData.material_prices) : {},
+              daily_rate: parseFloat(formData.daily_rate),
+              num_days: parseInt(formData.num_days, 10),
+              num_employees: parseInt(formData.num_employees, 10),
+            };
+      
+            // console.log("Second POST payload:", secondPostPayload);
+      
+            const response2 = await fetch('https://afc-proposal.onrender.com/new_bid/cost_estimation', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(secondPostPayload),
+            });
+      
+            const result2 = await response2.json();
+            console.log("Second POST result:", result2);
+
+            console.log("formData:", formData);
+
+      // Navigate to results page with both results
+      navigate('/results', { state: { result1, result2, formData, client_name, contact_info, job_address, job_scope } });
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return (
@@ -97,15 +139,68 @@ const handleSubmit = (e) => {
           className="bg-gray-800 text-white px-4 py-2 rounded"
         />
         <select
-        name="option_d"
-        value={formData.option_d}
-        onChange={handleChange}
-        className="bg-gray-800 text-white px-4 py-2 rounded"
-      >
-        <option value="">Top Rail?</option>
-        <option value="Yes">Yes</option>
-        <option value="No">No</option>
+          name="option_d"
+          value={formData.option_d}
+          onChange={handleChange}
+          className="bg-gray-800 text-white px-4 py-2 rounded"
+        >
+          <option value="">Top Rail?</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
         </select>
+
+        {/* New Inputs */}
+        <input
+          type="number"
+          name="price_per_square_foot"
+          value={formData.price_per_square_foot}
+          onChange={handleChange}
+          placeholder="Price Per Square Foot"
+          className="bg-gray-800 text-white px-4 py-2 rounded"
+        />
+        <select
+          name="pricing_strategy"
+          value={formData.pricing_strategy}
+          onChange={handleChange}
+          className="bg-gray-800 text-white px-4 py-2 rounded"
+        >
+          <option value="">Select Pricing Strategy</option>
+          <option value="Master Halo Pricing">Master Halo Pricing</option>
+          <option value="Fence Specialties Pricing">Fence Specialties Pricing</option>
+        </select>
+        <textarea
+          name="material_prices"
+          value={formData.material_prices}
+          onChange={handleChange}
+          placeholder="Material Prices (JSON format)"
+          className="bg-gray-800 text-white px-4 py-2 rounded"
+        ></textarea>
+
+        <input
+          type="number"
+          name="daily_rate"
+          value={formData.daily_rate}
+          onChange={handleChange}
+          placeholder="Daily Rate"
+          className="bg-gray-800 text-white px-4 py-2 rounded"
+        />
+         <input
+          type="number"
+          name="num_days"
+          value={formData.num_days}
+          onChange={handleChange}
+          placeholder="Number of Days"
+          className="bg-gray-800 text-white px-4 py-2 rounded"
+        />
+         <input
+          type="number"
+          name="num_employees"
+          value={formData.num_employees}
+          onChange={handleChange}
+          placeholder="Number of Employees"
+          className="bg-gray-800 text-white px-4 py-2 rounded"
+        />
+
         <button type="submit" className="bg-blue-500 text-black px-4 py-2 rounded">
           Submit
         </button>

@@ -19,26 +19,32 @@ function Information() {
     });
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const response = await fetch('https://d183qnk2al6bfi.cloudfront.net/new_bid/job_details', {
-  //       method: 'POST',
-  //       body: new URLSearchParams(formData)
-  //     });
-  //     const result = await response.json();
-  //     console.log(result);
-  //     console.log('job_id:', result.job_id);
-  //     navigate('/new-bid', { state: { job_id: result.job_id, ...formData } }); // Pass the job_id using navigate
-  //   } catch (error) {
-  //     console.error('Error:', error);
-  //   }
-  // };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    navigate('/new-bid'); 
+    try {
+      console.log("Sending data:", formData);
+      const response = await fetch('https://afc-proposal.onrender.com/new_bid/job_details', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json', // Specify JSON content type
+        },
+        body: JSON.stringify({
+          ...formData
+        }),
+      });
+      const result = await response.json();
+      console.log(result);
+      console.log('job_id:', result.job_id);
+      navigate('/new-bid', { state: { job_id: result.job_id, ...formData } }); // Pass the job_id using navigate
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   navigate('/new-bid'); 
+  // };
 
   return (
     
